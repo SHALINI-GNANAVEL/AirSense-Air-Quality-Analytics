@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AirSense | Air Quality Analytics</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+
+        <div class="logo">
+            🌿 AirSense
+        </div>
+
+        <nav>
+            <a href="#dashboard">Dashboard</a>
+            <a href="#predict">Prediction</a>
+            <a href="#history">History</a>
+            <a href="#about">About</a>
+        </nav>
+
+    </header>
+
+
+    <!-- MAIN -->
+
+    <main id="dashboard">
+
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div>
+
+                <p class="tag">
+                    ENVIRONMENTAL INTELLIGENCE
+                </p>
+
+                <h1>
+                    Understand Your
+                    <span>Air Quality</span>
+                </h1>
+
+                <p class="description">
+                    Analyze air pollution levels and predict air quality
+                    using machine learning.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- DASHBOARD STATS -->
+
+        <section class="stats-section">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🌫️
+                </div>
+
+                <h3>
+                    6
+                </h3>
+
+                <p>
+                    Pollutants Monitored
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🤖
+                </div>
+
+                <h3>
+                    Random Forest
+                </h3>
+
+                <p>
+                    Machine Learning Model
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📊
+                </div>
+
+                <h3>
+                    4
+                </h3>
+
+                <p>
+                    Air Quality Categories
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- PREDICTION -->
+
+        <section id="predict" class="prediction-section">
+
+            <div class="section-title">
+
+                <p class="tag">
+                    AI PREDICTION
+                </p>
+
+                <h2>
+                    Air Quality Prediction
+                </h2>
+
+                <p>
+                    Enter the current pollution measurements.
+                </p>
+
+            </div>
+
+
+            <!-- INPUT CARD -->
+
+            <div class="prediction-card">
+
+                <div class="input-grid">
+
+                    <div class="input-box">
+
+                        <label>
+                            PM2.5
+                        </label>
+
+                        <input
+                            type="number"
+                            id="pm25"
+                            step="0.1"
+                            placeholder="e.g. 35"
+                        >
+
+                    </div>
+
+
+                    <div class="input-box">
+
+                        <label>
+                            PM10
+                        </label>
+
+                        <input
+                            type="number"
+                            id="pm10"
+                            step="0.1"
+                            placeholder="e.g. 70"
+                        >
+
+                    </div>
+
+
+                    <div class="input-box">
+
+                        <label>
+                            NO₂
+                        </label>
+
+                        <input
+                            type="number"
+                            id="no2"
+                            step="0.1"
+                            placeholder="e.g. 40"
+                        >
+
+                    </div>
+
+
+                    <div class="input-box">
+
+                        <label>
+                            SO₂
+                        </label>
+
+                        <input
+                            type="number"
+                            id="so2"
+                            step="0.1"
+                            placeholder="e.g. 10"
+                        >
+
+                    </div>
+
+
+                    <div class="input-box">
+
+                        <label>
+                            CO
+                        </label>
+
+                        <input
+                            type="number"
+                            id="co"
+                            step="0.1"
+                            placeholder="e.g. 0.8"
+                        >
+
+                    </div>
+
+
+                    <div class="input-box">
+
+                        <label>
+                            O₃
+                        </label>
+
+                        <input
+                            type="number"
+                            id="o3"
+                            step="0.1"
+                            placeholder="e.g. 45"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- PREDICT BUTTON -->
+
+                <button onclick="predictAirQuality()">
+                    Predict Air Quality
+                </button>
+
+            </div>
+
+
+            <!-- RESULT -->
+
+            <div id="result" class="result-card">
+
+                <div class="result-icon">
+                    🌿
+                </div>
+
+                <div>
+
+                    <p>
+                        Predicted Air Quality
+                    </p>
+
+                    <h2 id="category">
+                        --
+                    </h2>
+
+                    <span>
+
+                        Model Confidence:
+
+                        <strong id="confidence">
+                            --
+                        </strong>
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- HISTORY -->
+
+        <section id="history" class="history-section">
+
+            <div class="section-title">
+
+                <p class="tag">
+                    ANALYTICS
+                </p>
+
+                <h2>
+                    Prediction History
+                </h2>
+
+                <p>
+                    Recent air quality predictions.
+                </p>
+
+            </div>
+
+
+            <!-- CLEAR HISTORY BUTTON -->
+
+            <button
+                class="clear-btn"
+                onclick="clearHistory()"
+            >
+                Clear History
+            </button>
+
+
+            <!-- HISTORY TABLE -->
+
+            <div class="history-card">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                PM2.5
+                            </th>
+
+                            <th>
+                                PM10
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Confidence
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="historyTable">
+
+                        <tr>
+
+                            <td colspan="4">
+                                No predictions yet
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+
+        <section id="about" class="about">
+
+            <div class="section-title">
+
+                <p class="tag">
+                    ABOUT AIRSENSE
+                </p>
+
+                <h2>
+                    Environmental Analytics
+                </h2>
+
+                <p>
+                    AirSense uses a machine-learning classification model
+                    to analyze pollutant measurements and determine the
+                    corresponding air-quality category.
+                </p>
+
+            </div>
+
+
+            <!-- POLLUTANT INFORMATION -->
+
+            <div class="pollutant-info">
+
+
+                <div class="pollutant-card">
+
+                    <h3>
+                        PM2.5
+                    </h3>
+
+                    <p>
+                        Fine particulate matter that can affect respiratory health.
+                    </p>
+
+                </div>
+
+
+                <div class="pollutant-card">
+
+                    <h3>
+                        PM10
+                    </h3>
+
+                    <p>
+                        Larger airborne particles commonly produced by dust and pollution.
+                    </p>
+
+                </div>
+
+
+                <div class="pollutant-card">
+
+                    <h3>
+                        NO₂
+                    </h3>
+
+                    <p>
+                        Nitrogen dioxide associated with vehicle and industrial emissions.
+                    </p>
+
+                </div>
+
+
+                <div class="pollutant-card">
+
+                    <h3>
+                        SO₂
+                    </h3>
+
+                    <p>
+                        Sulfur dioxide primarily associated with combustion processes.
+                    </p>
+
+                </div>
+
+
+                <div class="pollutant-card">
+
+                    <h3>
+                        CO
+                    </h3>
+
+                    <p>
+                        Carbon monoxide produced by incomplete combustion.
+                    </p>
+
+                </div>
+
+
+                <div class="pollutant-card">
+
+                    <h3>
+                        O₃
+                    </h3>
+
+                    <p>
+                        Ground-level ozone formed through atmospheric chemical reactions.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            © 2026 AirSense | Machine Learning Environmental Analytics
+        </p>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
